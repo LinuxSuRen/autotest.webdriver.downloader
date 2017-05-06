@@ -59,11 +59,24 @@ public class DriverMapping
 		}
 	}
 	
+	/**
+	 * @see #getUrl(String, String, String, String)
+	 * @param browser
+	 * @param ver
+	 * @return
+	 */
 	public String getUrl(String browser, String ver)
 	{
 		return getUrl(browser, ver, "win32", "32");
 	}
 	
+	/**
+	 * @param browser
+	 * @param ver
+	 * @param os
+	 * @param arch
+	 * @return 找不到返回null
+	 */
 	public String getUrl(String browser, String ver, String os, String arch)
 	{
 		String xpathStr = String.format("//drivers/driver[@type='%s']/supports/browser[@version='%s']",

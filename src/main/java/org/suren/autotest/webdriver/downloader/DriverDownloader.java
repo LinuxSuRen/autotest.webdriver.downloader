@@ -19,6 +19,7 @@ package org.suren.autotest.webdriver.downloader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -33,7 +34,6 @@ import java.util.zip.ZipInputStream;
  */
 public class DriverDownloader
 {
-	
 	/**
 	 * 从指定地址中获取驱动文件，并拷贝到框架根目录中。如果是zip格式的话，会自动解压。
 	 * @param url
@@ -57,7 +57,17 @@ public class DriverDownloader
 			String driverFileName = (driverPrefix + new File(url.getFile()).getName());
 			try(InputStream inputStream = url.openStream())
 			{
-				driverFile = PathUtil.copyFileToRoot(inputStream, driverFileName);
+				FilterInputStream filterInputStream = new FilterInputStream(inputStream){
+
+					@Override
+					public int read(byte[] b) throws IOException
+					{
+						System.out.print(".");
+						return super.read(b);
+					}
+				};
+				
+				driverFile = PathUtil.copyFileToRoot(filterInputStream, driverFileName);
 			}
 		}
 		else
