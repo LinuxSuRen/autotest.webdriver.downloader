@@ -34,6 +34,17 @@ import java.util.zip.ZipInputStream;
  */
 public class DriverDownloader
 {
+
+	private Progress progress = new Progress()
+	{
+		
+		@Override
+		public void transfer(int len)
+		{
+			System.out.print(".");
+		}
+	};
+	
 	/**
 	 * 从指定地址中获取驱动文件，并拷贝到框架根目录中。如果是zip格式的话，会自动解压。
 	 * @param url
@@ -62,7 +73,7 @@ public class DriverDownloader
 					@Override
 					public int read(byte[] b) throws IOException
 					{
-						System.out.print(".");
+						getProgress().transfer(b.length);
 						return super.read(b);
 					}
 				};
@@ -142,6 +153,16 @@ public class DriverDownloader
 		{
 			return false;
 		}
+	}
+
+	public Progress getProgress()
+	{
+		return progress;
+	}
+
+	public void setProgress(Progress progress)
+	{
+		this.progress = progress;
 	}
 
 }

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <drivers base="http://surenpi.com/webdriver/">
+	<mapping>
+		<map type="chrome" driver="webdriver.chrome.driver" />
+		<map type="ie" driver="webdriver.ie.driver" />
+		<map type="firefox" driver="webdriver.firefox.driver" />
+	</mapping>
+	
 	<!-- 谷歌（Chrome）浏览器 -->
 	<driver type="chrome" version="2.29">
 		<items>

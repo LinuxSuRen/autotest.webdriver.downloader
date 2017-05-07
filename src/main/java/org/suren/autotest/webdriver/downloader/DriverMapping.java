@@ -18,8 +18,14 @@ package org.suren.autotest.webdriver.downloader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -40,14 +46,17 @@ public class DriverMapping
 	public void init()
 	{
 		try(InputStream input = this.getClass().getClassLoader().getResourceAsStream("driver.mapping.xml");
-				InputStream test = this.getClass().getClassLoader().getResourceAsStream("engine.properties"))
+				InputStream enginePro = this.getClass().getClassLoader().getResourceAsStream("engine.properties"))
 		{
 			SAXReader reader = new SAXReader();
 			
 			document = reader.read(input);
 			
-			Properties pro = new Properties();
-			pro.load(test);
+			if(enginePro != null)
+			{
+				Properties pro = new Properties();
+				pro.load(enginePro);
+			}
 		}
 		catch (IOException e)
 		{
@@ -107,15 +116,64 @@ public class DriverMapping
 		return path;
 	}
 	
-	public static void main(String[] args)
+	/**
+	 * @return 支持的浏览器以及版本列表
+	 */
+	public Map<String, Set<String>> supportBrowser()
 	{
-		DriverMapping driverMapping = new DriverMapping();
-		driverMapping.init();
+		Map<String, Set<String>> browserMap = new HashMap<String, Set<String>>();
+
+		String xpathStr = String.format("//drivers/driver");
+		XPath xpath = new DefaultXPath(xpathStr);
+
+		String path = null;
+		List<Element> nodes = xpath.selectNodes(document);
+		for(Element ele : nodes)
+		{
+			String type = ele.attributeValue("type");
+			
+			Set<String> verList = new TreeSet<String>();
+			List<Element> verEleList = ele.element("supports").elements("browser");
+			for(Element verEle : verEleList)
+			{
+				String ver = verEle.attributeValue("version");
+				
+				verList.add(ver);
+			}
+			
+			Set<String> oldVerList = browserMap.get(type);
+			if(oldVerList == null)
+			{
+				browserMap.put(type, verList);
+			}
+			else
+			{
+				oldVerList.addAll(verList);
+			}
+		}
 		
-		String url = driverMapping.getUrl("chrome", "56");
+		return browserMap;
+	}
+	
+	/**
+	 * @return 驱动与其对应的配置
+	 */
+	public Map<String, String> driverMap()
+	{
+		Map<String, String> driverMap = new HashMap<String, String>();
+
+		String xpathStr = String.format("//mapping/map");
+		XPath xpath = new DefaultXPath(xpathStr);
+
+		List<Element> nodes = xpath.selectNodes(document);
+		for(Element ele : nodes)
+		{
+			String type = ele.attributeValue("type");
+			String driver = ele.attributeValue("driver");
+			
+			driverMap.put(type, driver);
+		}
 		
-		System.out.println(url);
-		
-		System.out.println(System.getProperty("os.arch"));
+		return driverMap;
 	}
 }
