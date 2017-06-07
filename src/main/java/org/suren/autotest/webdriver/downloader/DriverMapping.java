@@ -19,6 +19,7 @@ package org.suren.autotest.webdriver.downloader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -132,7 +133,14 @@ public class DriverMapping
 		{
 			String type = ele.attributeValue("type");
 			
-			Set<String> verList = new TreeSet<String>();
+			Set<String> verList = new TreeSet<String>(new Comparator<String>(){
+
+				@Override
+				public int compare(String o1, String o2)
+				{
+					return o2.compareTo(o1);
+				}
+			});
 			List<Element> verEleList = ele.element("supports").elements("browser");
 			for(Element verEle : verEleList)
 			{

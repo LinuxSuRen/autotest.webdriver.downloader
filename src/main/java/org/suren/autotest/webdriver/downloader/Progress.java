@@ -17,10 +17,22 @@
 package org.suren.autotest.webdriver.downloader;
 
 /**
+ * 进度信息接口
  * @author suren
  * @date 2017年5月7日 下午12:53:03
  */
 public interface Progress
 {
+	/**
+	 * @param len 传输了的字节数
+	 */
 	void transfer(int len);
+	
+	/**
+	 * 传输结束
+	 */
+	default void done()
+	{
+		System.out.println();
+	}
 }

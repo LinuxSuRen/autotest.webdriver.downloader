@@ -79,6 +79,8 @@ public class DriverDownloader
 				};
 				
 				driverFile = PathUtil.copyFileToRoot(filterInputStream, driverFileName);
+				
+				getProgress().done();
 			}
 		}
 		else
