@@ -7,6 +7,22 @@
 	</mapping>
 	
 	<!-- 谷歌（Chrome）浏览器 -->
+	<driver type="chrome" version="2.30">
+		<items>
+			<item arch="64" os="linux" path="" />
+			<item arch="32" os="linux" path="" />
+			<item arch="64" os="mac" path="" />
+			<item arch="32" os="mac" path="" />
+			<item arch="64" os="win32" path="chromedriver.2.30.477700.zip" />
+			<item arch="32" os="win32" path="chromedriver.2.30.477700.zip" />
+		</items>
+
+		<supports>
+			<browser version="58"/>
+			<browser version="59"/>
+			<browser version="60"/>
+		</supports>
+	</driver>
 	<driver type="chrome" version="2.29">
 		<items>
 			<item arch="64" os="linux" path="" />
