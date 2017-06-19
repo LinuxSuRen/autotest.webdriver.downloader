@@ -16,12 +16,7 @@
 
 package org.suren.autotest.webdriver.downloader;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FilterInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.zip.ZipEntry;
@@ -34,6 +29,7 @@ import java.util.zip.ZipInputStream;
  */
 public class DriverDownloader
 {
+	private int errorTimes = 0;
 
 	private Progress progress = new Progress()
 	{
@@ -87,8 +83,20 @@ public class DriverDownloader
 		{
 			driverFile = new File(URLDecoder.decode(url.getFile(), "utf-8"));
 		}
-		
-		return fileProcess(driverFile, driverPrefix);
+
+		try
+		{
+			return fileProcess(driverFile, driverPrefix);
+		}
+		catch (EOFException e)
+		{
+			if(errorTimes++ > 3)
+			{
+				throw e;
+			}
+
+			return getLocalFilePath(url);
+		}
 	}
 	
 	/**
