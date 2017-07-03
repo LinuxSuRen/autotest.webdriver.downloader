@@ -11,8 +11,8 @@
 		<items>
 			<item arch="64" os="linux" path="" />
 			<item arch="32" os="linux" path="" />
-			<item arch="64" os="mac" path="" />
-			<item arch="32" os="mac" path="" />
+			<item arch="64" os="mac" path="chromedriver_mac64.2.30.zip" />
+			<item arch="32" os="mac" path="chromedriver_mac64.2.30.zip" />
 			<item arch="64" os="win32" path="chromedriver.2.30.477700.zip" />
 			<item arch="32" os="win32" path="chromedriver.2.30.477700.zip" />
 		</items>
