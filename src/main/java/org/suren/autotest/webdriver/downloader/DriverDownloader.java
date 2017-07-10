@@ -129,6 +129,11 @@ public class DriverDownloader
 				}
 			}
 			
+			if(!driverFile.canExecute())
+			{
+				driverFile.setExecutable(true);
+			}
+			
 			return driverFile.getAbsolutePath();
 		}
 		else
