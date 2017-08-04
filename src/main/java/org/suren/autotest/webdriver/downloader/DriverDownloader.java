@@ -33,11 +33,22 @@ public class DriverDownloader
 
 	private Progress progress = new Progress()
 	{
+		private int count = 0;
+		private int total = 6;
 		
 		@Override
 		public void transfer(int len)
 		{
 			System.out.print(".");
+			if(++count > total)
+			{
+				for(int i = 0; i < total; i++)
+				{
+					System.out.print("\b");
+					System.out.print(" ");
+					System.out.print("\b");
+				}
+			}
 		}
 	};
 	
@@ -88,8 +99,10 @@ public class DriverDownloader
 		{
 			return fileProcess(driverFile, driverPrefix);
 		}
-		catch (EOFException e)
+		catch (EOFException | ErrorDriverException e)
 		{
+			driverFile.delete();
+			
 			if(errorTimes++ > 3)
 			{
 				throw e;
@@ -125,6 +138,10 @@ public class DriverDownloader
 						{
 							PathUtil.copyFileToRoot(zipIn, driverFile);
 						}
+					}
+					else
+					{
+						throw new ErrorDriverException();
 					}
 				}
 			}

@@ -1,0 +1,1 @@
+gcc -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -Wl,-kill-at -s -o native_progress.dll native_progress.c
