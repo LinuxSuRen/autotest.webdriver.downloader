@@ -108,7 +108,7 @@ public class DriverMapping
 			}
 		}
 		
-		if(path != null)
+		if(path != null && !path.trim().equals(""))
 		{
 			String base = document.getRootElement().attributeValue("base");
 			path = base + path;
