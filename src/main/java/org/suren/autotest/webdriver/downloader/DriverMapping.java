@@ -113,6 +113,10 @@ public class DriverMapping
 			String base = document.getRootElement().attributeValue("base");
 			path = base + path;
 		}
+		else
+		{
+		    path = null;
+		}
 		
 		return path;
 	}
