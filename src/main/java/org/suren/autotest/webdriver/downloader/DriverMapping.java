@@ -18,10 +18,8 @@ package org.suren.autotest.webdriver.downloader;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -34,20 +32,26 @@ import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 import org.dom4j.xpath.DefaultXPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.surenpi.autotest.utils.StringUtils;
 
 /**
  * webdriver驱动和浏览器版本的映射
- * @author suren
- * @date 2017年2月20日 下午3:52:07
+ * @author <a href="http://surenpi.com">suren</a>
  */
 public class DriverMapping
 {
+    private static final Logger logger = LoggerFactory.getLogger(DriverMapping.class);
+    
 	private Document document;
+	private Properties osMap = new Properties();
 
 	public void init()
 	{
 		try(InputStream input = this.getClass().getClassLoader().getResourceAsStream("driver.mapping.xml");
-				InputStream enginePro = this.getClass().getClassLoader().getResourceAsStream("engine.properties"))
+				InputStream enginePro = this.getClass().getClassLoader().getResourceAsStream("os.mapping.properties"))
 		{
 			SAXReader reader = new SAXReader();
 			
@@ -55,36 +59,48 @@ public class DriverMapping
 			
 			if(enginePro != null)
 			{
-				Properties pro = new Properties();
-				pro.load(enginePro);
+				osMap.load(enginePro);
 			}
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+		    logger.error("", e);
 		}
 		catch (DocumentException e)
 		{
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 	
 	/**
+	 * 根据当前的操作系统来选择
 	 * @see #getUrl(String, String, String, String)
-	 * @param browser
-	 * @param ver
-	 * @return
+	 * @param browser 浏览器类型
+	 * @param ver 浏览器版本
+	 * @return 驱动下载地址
 	 */
 	public String getUrl(String browser, String ver)
 	{
-		return getUrl(browser, ver, "win32", "32");
+        //实现对多个操作系统的兼容性设置
+        final String os = System.getProperty("os.name");
+        final String arch = System.getProperty("os.arch");
+        
+        String commonOs = osMap.getProperty("os.map.name." + os);
+        String commonArch = osMap.getProperty("os.map.arch." + arch);
+        
+        if(StringUtils.isAnyBlank(commonOs, commonArch))
+        {
+            throw new RuntimeException(String.format("unknow os [%s] and arch [%s].", os, arch));
+        }
+        
+		return getUrl(browser, ver, commonOs, commonArch);
 	}
 	
 	/**
 	 * @param browser
 	 * @param ver
-	 * @param os
-	 * @param arch
+	 * @param os 操作系统名称
+	 * @param arch CUP架构（32或者64位）
 	 * @return 找不到返回null
 	 */
 	public String getUrl(String browser, String ver, String os, String arch)
@@ -94,10 +110,12 @@ public class DriverMapping
 		XPath xpath = new DefaultXPath(xpathStr);
 
 		String path = null;
-		List<Element> nodes = xpath.selectNodes(document);
+		@SuppressWarnings("unchecked")
+        List<Element> nodes = xpath.selectNodes(document);
 		for(Element ele : nodes)
 		{
-			List<Element> itemList = ele.getParent().getParent().element("items").elements("item");
+			@SuppressWarnings("unchecked")
+            List<Element> itemList = ele.getParent().getParent().element("items").elements("item");
 			for(Element item : itemList)
 			{
 				if(os.equals(item.attributeValue("os")) && arch.equals(item.attributeValue("arch")))
@@ -131,8 +149,8 @@ public class DriverMapping
 		String xpathStr = String.format("//drivers/driver");
 		XPath xpath = new DefaultXPath(xpathStr);
 
-		String path = null;
-		List<Element> nodes = xpath.selectNodes(document);
+		@SuppressWarnings("unchecked")
+        List<Element> nodes = xpath.selectNodes(document);
 		for(Element ele : nodes)
 		{
 			String type = ele.attributeValue("type");
@@ -145,7 +163,8 @@ public class DriverMapping
 					return o2.compareTo(o1);
 				}
 			});
-			List<Element> verEleList = ele.element("supports").elements("browser");
+			@SuppressWarnings("unchecked")
+            List<Element> verEleList = ele.element("supports").elements("browser");
 			for(Element verEle : verEleList)
 			{
 				String ver = verEle.attributeValue("version");
@@ -177,7 +196,8 @@ public class DriverMapping
 		String xpathStr = String.format("//mapping/map");
 		XPath xpath = new DefaultXPath(xpathStr);
 
-		List<Element> nodes = xpath.selectNodes(document);
+		@SuppressWarnings("unchecked")
+        List<Element> nodes = xpath.selectNodes(document);
 		for(Element ele : nodes)
 		{
 			String type = ele.attributeValue("type");
