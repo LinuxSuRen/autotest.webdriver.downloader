@@ -65,6 +65,11 @@
 			<groupId>com.surenpi.autotest</groupId>
         	<artifactId>autotest.utils</artifactId>
         </dependency>
+        
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+		</dependency>
 	</dependencies>
 	<url>http://surenpi.com</url>
 </project>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <drivers base="http://surenpi.com/webdriver/">
 	<mapping>
-		<map type="chrome" driver="webdriver.chrome.driver" />
+		<map type="chrome" driver="webdriver.chrome.driver" alias="chromium" />
 		<map type="ie" driver="webdriver.ie.driver" />
 		<map type="firefox" driver="webdriver.firefox.driver" />
 	</mapping>

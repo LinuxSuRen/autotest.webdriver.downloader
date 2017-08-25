@@ -18,6 +18,7 @@ package org.suren.autotest.webdriver.downloader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -188,6 +189,8 @@ public class DriverMapping
 	
 	/**
 	 * @return 驱动与其对应的配置
+	 * @see #browserList()
+	 * @deprecated remove in 1.2.0
 	 */
 	public Map<String, String> driverMap()
 	{
@@ -208,4 +211,32 @@ public class DriverMapping
 		
 		return driverMap;
 	}
+	
+    /**
+     * @return 浏览器配置列表
+     */
+    public List<Browser> browserList()
+    {
+        List<Browser> browserList = new ArrayList<Browser>();
+
+        String xpathStr = String.format("//mapping/map");
+        XPath xpath = new DefaultXPath(xpathStr);
+
+        @SuppressWarnings("unchecked")
+        List<Element> nodes = xpath.selectNodes(document);
+        for(Element ele : nodes)
+        {
+            String type = ele.attributeValue("type");
+            String driver = ele.attributeValue("driver");
+            String alias = ele.attributeValue("alias");
+            
+            Browser browser = new Browser();
+            browser.setName(type);
+            browser.setDriver(driver);
+            browser.setAlias(alias);
+            browserList.add(browser);
+        }
+        
+        return browserList;
+    }
 }

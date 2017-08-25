@@ -73,22 +73,32 @@ public class DriverDownloader
 		if("jar".equals(protocol) || "http".equals(protocol))
 		{
 			String driverFileName = (driverPrefix + new File(url.getFile()).getName());
-			try(InputStream inputStream = url.openStream())
-			{
-				FilterInputStream filterInputStream = new FilterInputStream(inputStream){
-
-					@Override
-					public int read(byte[] b) throws IOException
-					{
-						getProgress().transfer(b.length);
-						return super.read(b);
-					}
-				};
-				
-				driverFile = PathUtil.copyFileToRoot(filterInputStream, driverFileName);
-				
-				getProgress().done();
-			}
+			
+	        File rootFile = PathUtil.getRootDir();
+	        File targetFile = new File(rootFile, driverFileName);
+	        if(targetFile.isFile())
+	        {
+	            driverFile = targetFile;
+	        }
+	        else
+	        {
+	            try(InputStream inputStream = url.openStream())
+	            {
+	                FilterInputStream filterInputStream = new FilterInputStream(inputStream){
+	                    
+	                    @Override
+	                    public int read(byte[] b) throws IOException
+	                    {
+	                        getProgress().transfer(b.length);
+	                        return super.read(b);
+	                    }
+	                };
+	                
+	                driverFile = PathUtil.copyFileToRoot(filterInputStream, driverFileName);
+	                
+	                getProgress().done();
+	            }
+	        }
 		}
 		else
 		{
