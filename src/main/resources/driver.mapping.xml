@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<drivers base="http://surenpi.com/webdriver/">
+<drivers base="http://npm.taobao.org/mirrors/">
 	<mapping>
-		<map type="chrome" driver="webdriver.chrome.driver" alias="chromium" />
+		<map type="chrome" driver="webdriver.chrome.driver"
+			 alias="chromium" path="/chromedriver" />
 		<map type="ie" driver="webdriver.ie.driver" />
 		<map type="firefox" driver="webdriver.firefox.driver" />
 	</mapping>

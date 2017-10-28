@@ -113,6 +113,7 @@ public class DriverMapping
 		String path = null;
 		@SuppressWarnings("unchecked")
         List<Element> nodes = xpath.selectNodes(document);
+		String driverVer = null;
 		for(Element ele : nodes)
 		{
 			@SuppressWarnings("unchecked")
@@ -125,12 +126,26 @@ public class DriverMapping
 					break;
 				}
 			}
+
+            driverVer = ele.getParent().getParent().attributeValue("version");
+			break;
 		}
 		
-		if(path != null && !path.trim().equals(""))
+		if(driverVer != null && !driverVer.trim().equals(""))
 		{
 			String base = document.getRootElement().attributeValue("base");
-			path = base + path;
+			String subPath = "";
+
+            for(Browser bro : browserList())
+            {
+                if(browser.equals(bro.getName()))
+                {
+                    subPath = bro.getPath();
+                    break;
+                }
+            }
+
+			path = base + subPath + "/" + driverVer + "/" + browser + "driver_" + os + arch + ".zip";
 		}
 		else
 		{
@@ -229,11 +244,14 @@ public class DriverMapping
             String type = ele.attributeValue("type");
             String driver = ele.attributeValue("driver");
             String alias = ele.attributeValue("alias");
+            String path = ele.attributeValue("path");
             
             Browser browser = new Browser();
             browser.setName(type);
             browser.setDriver(driver);
             browser.setAlias(alias);
+            browser.setPath(path);
+
             browserList.add(browser);
         }
         

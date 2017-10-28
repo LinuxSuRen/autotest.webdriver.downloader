@@ -27,6 +27,7 @@ public class Browser
     private String version;
     private String driver;
     private String alias;
+    private String path;
     /**
      * @return the name
      */
@@ -82,5 +83,15 @@ public class Browser
     public void setAlias(String alias)
     {
         this.alias = alias;
+    }
+
+    public String getPath()
+    {
+        return path;
+    }
+
+    public void setPath(String path)
+    {
+        this.path = path;
     }
 }
