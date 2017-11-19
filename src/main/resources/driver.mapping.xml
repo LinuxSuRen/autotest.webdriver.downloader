@@ -8,6 +8,22 @@
 	</mapping>
 	
 	<!-- 谷歌（Chrome）浏览器 -->
+	<driver type="chrome" version="2.33">
+		<items>
+			<item arch="64" os="linux" path="chromedriver.2.32.498513.linux.64.zip" />
+			<item arch="32" os="linux" path="chromedriver.2.32.498513.linux.32.zip" />
+			<item arch="64" os="mac" path="chromedriver_mac64.2.32.zip" />
+			<item arch="32" os="mac" path="chromedriver_mac64.2.32.zip" />
+			<item arch="64" os="win32" path="chromedriver.2.32.498513.zip" />
+			<item arch="32" os="win32" path="chromedriver.2.32.498513.zip" />
+		</items>
+
+		<supports>
+			<browser version="60"/>
+			<browser version="61"/>
+			<browser version="62"/>
+		</supports>
+	</driver>
 	<driver type="chrome" version="2.32">
 		<items>
 			<item arch="64" os="linux" path="chromedriver.2.32.498513.linux.64.zip" />
