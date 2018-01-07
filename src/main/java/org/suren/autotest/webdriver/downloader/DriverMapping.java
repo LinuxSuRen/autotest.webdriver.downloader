@@ -145,6 +145,11 @@ public class DriverMapping
                 }
             }
 
+            if("win32".equals(os))
+            {
+                arch = "";
+            }
+
 			path = base + subPath + "/" + driverVer + "/" + browser + "driver_" + os + arch + ".zip";
 		}
 		else
