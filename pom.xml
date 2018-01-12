@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>autotest.webdriver.downloader</artifactId>
-	<version>1.0.2-20171119</version>
+	<version>1.0.2-20180112</version>
 	
 	<name>autotest.webdriver.downloader</name>
 	<description>webdriver驱动下载模块</description>
