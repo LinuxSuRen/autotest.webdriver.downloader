@@ -9,16 +9,26 @@
 	</parent>
 
 	<artifactId>autotest.webdriver.downloader</artifactId>
-	<version>1.0.2-20180112</version>
+	<version>1.0.2-20180128-SNAPSHOT</version>
 	
 	<name>autotest.webdriver.downloader</name>
 	<description>webdriver驱动下载模块</description>
+
+    <scm>
+        <connection>scm:git:https://github.com/LinuxSuRen/autotest.webdriver.downloader</connection>
+        <url>https://github.com/LinuxSuRen/autotest.webdriver.downloader</url>
+        <developerConnection>scm:git:https://github.com/LinuxSuRen/autotest.webdriver.downloader</developerConnection>
+    </scm>
 	
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
