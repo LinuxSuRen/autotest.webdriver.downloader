@@ -70,7 +70,7 @@ public class DriverDownloader
 		
 		File driverFile = null;
 		String protocol = url.getProtocol();
-		if("jar".equals(protocol) || "http".equals(protocol))
+		if("jar".equals(protocol) || "http".equals(protocol) || "https".equals(protocol))
 		{
 			String driverFileName = (driverPrefix + new File(url.getFile()).getName());
 			

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<drivers base="http://npm.taobao.org/mirrors/">
+<drivers base="https://cdn.npm.taobao.org/dist">
 	<mapping>
 		<map type="chrome" driver="webdriver.chrome.driver"
 			 alias="chromium" path="/chromedriver" />
