@@ -14,9 +14,9 @@
 	<description>webdriver驱动下载模块</description>
 
     <scm>
-        <connection>scm:git:https://github.com/LinuxSuRen/autotest.webdriver.downloader</connection>
-        <url>https://github.com/LinuxSuRen/autotest.webdriver.downloader</url>
-        <developerConnection>scm:git:https://github.com/LinuxSuRen/autotest.webdriver.downloader</developerConnection>
+        <connection>scm:git:git@github.com:LinuxSuRen/autotest.webdriver.downloader</connection>
+        <url>git@github.com:LinuxSuRen/autotest.webdriver.downloader</url>
+        <developerConnection>scm:git:git@github.com:LinuxSuRen/autotest.webdriver.downloader</developerConnection>
       <tag>HEAD</tag>
   </scm>
 	
