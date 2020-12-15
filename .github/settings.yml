@@ -1,6 +1,6 @@
 repository:
   name: autotest.webdriver.downloader
-  description: Webdriver downloader
+  description: autotest.webdriver.downloader
   homepage: https://jenkins-zh.cn
   private: false
   has_issues: true
