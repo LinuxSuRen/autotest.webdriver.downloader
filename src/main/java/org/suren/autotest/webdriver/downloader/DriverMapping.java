@@ -106,6 +106,10 @@ public class DriverMapping
 	 */
 	public String getUrl(String browser, String ver, String os, String arch)
 	{
+		if ("chrome".equals(browser) && Integer.parseInt(ver.split("\\.")[0]) >= 70) {
+			return "https://npm.taobao.org/mirrors/chromedriver/" + ver + "/chromedriver_" + os + arch + ".zip";
+		}
+
 		String xpathStr = String.format("//drivers/driver[@type='%s']/supports/browser[@version='%s']",
 				browser, ver);
 		XPath xpath = new DefaultXPath(xpathStr);
