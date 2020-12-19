@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>autotest.webdriver.downloader</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5-SNAPSHOT</version>
 	
 	<name>autotest.webdriver.downloader</name>
 	<description>webdriver驱动下载模块</description>
@@ -17,7 +17,7 @@
         <connection>scm:git:git@github.com:LinuxSuRen/autotest.webdriver.downloader</connection>
         <url>git@github.com:LinuxSuRen/autotest.webdriver.downloader</url>
         <developerConnection>scm:git:git@github.com:LinuxSuRen/autotest.webdriver.downloader</developerConnection>
-      <tag>v1.0.4</tag>
+      <tag>v1.0.2-20180129</tag>
   </scm>
 	
 	<build>
